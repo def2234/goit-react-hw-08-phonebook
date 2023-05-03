@@ -8,7 +8,7 @@ import {
   getFilter,
   getIsLoading,
   getItems,
-} from 'Redux/selectors/selectors';
+} from 'Redux/contacts/selectors';
 
 export const ContactsList = () => {
   const items = useSelector(getItems);

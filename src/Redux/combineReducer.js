@@ -1,6 +1,6 @@
 import { userRegisterReducer } from './auth/authSlice';
-import { contactReducer } from './contactsSlice';
-import { filterSlice } from './filterSlice';
+import { contactReducer } from './contacts/contactsSlice';
+import { filterSlice } from './contacts/filterSlice';
 
 import { combineReducers } from '@reduxjs/toolkit';
 

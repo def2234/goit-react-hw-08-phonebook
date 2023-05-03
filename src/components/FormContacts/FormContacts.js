@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { Form, Btn, Label, P, Input } from './FormContacts-styled';
 import { useDispatch, useSelector } from 'react-redux';
 import { addContact } from 'Redux/operationsApi';
-import { getItems } from 'Redux/selectors/selectors';
+import { getItems } from 'Redux/contacts/selectors';
 
 export function FormContacts() {
   const [name, setName] = useState('');

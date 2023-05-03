@@ -1,12 +1,12 @@
 import { createSlice, isAnyOf } from '@reduxjs/toolkit';
-import { fetchContacts, addContact, deleteContact } from './operationsApi';
+import { fetchContacts, addContact, deleteContact } from '../operationsApi';
 import {
   handleFulfilledCreate,
   handleFulfilledDelete,
   handleFulfilledGet,
   handlePending,
   handleRejected,
-} from './handleStatusContact/handleStatusContacts';
+} from './handleStatusContacts';
 
 export const contactsSlice = createSlice({
   name: 'contacts',
