@@ -1,8 +1,13 @@
+import { Route, Routes } from 'react-router-dom';
+// import { FormContacts } from './FormContacts/FormContacts.js';
 
-import { FormContacts } from './FormContacts/FormContacts.js';
+// import { ContactsList } from './ContactsList/ContactsList';
+// import { Filter } from './Filter/Filter';
+import { Navigation } from './navigation/Navigation.js';
+// import { Home } from 'page/HomePage.js';
+import RegisterPage from 'page/RegisterPage.js';
+import LoginPage from 'page/LoginPage.js';
 
-import { ContactsList } from './ContactsList/ContactsList';
-import { Filter } from './Filter/Filter';
 
 
 
@@ -10,17 +15,19 @@ import { Filter } from './Filter/Filter';
 export function App() {
 
   return (
-    <>
-      <h2>Phone book</h2>
-      <FormContacts />
-      <h2>Contacts</h2>
-      <Filter/>
-      <ContactsList
-       
-     
-      />
-    </>
+    <Routes>
+    <Route path="/" element={<Navigation />}>
+      {/* <Route index element={<Home />} /> */}
+      <Route path='/register' element={<RegisterPage/>}/>
+      <Route path='/login' element={<LoginPage/>}/>
+      
+    </Route>
+  </Routes>
+   
   );
 }
 
 export default App;
+
+
+ 
