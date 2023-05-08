@@ -1,28 +1,57 @@
 import { Route, Routes } from 'react-router-dom';
-// import { FormContacts } from './FormContacts/FormContacts.js';
 
-// import { ContactsList } from './ContactsList/ContactsList';
-// import { Filter } from './Filter/Filter';
-import { Navigation } from './navigation/Navigation.js';
-// import { Home } from 'page/HomePage.js';
-import RegisterPage from 'page/RegisterPage.js';
-import LoginPage from 'page/LoginPage.js';
+import { Suspense, lazy, useEffect } from 'react';
+import PrivateRoute from './PrivateRoute.js';
+import PublicRoute from './PublicRoute.js';
 
+import Slider from './slider/Slider.js';
+import HomePage from 'page/HomePage.js';
+import { useDispatch, useSelector} from 'react-redux';
+
+import { getCurrentUser } from 'Redux/auth/authOperations.js';
+import { getIsRefreshing, getToken } from 'Redux/auth/authSelectors.js';
+
+
+
+const Navigation = lazy(() => import('./navigation/Navigation.js'))
+const RegisterPage = lazy(() => import('page/RegisterPage.js'))
+const LoginPage = lazy(() => import('page/LoginPage.js'))
+const ContactsPage = lazy(() => import('page/ContactsPage.js'))
 
 
 
 
 export function App() {
+const dispatch = useDispatch()
+const isRefreshing = useSelector(getIsRefreshing)
+
+
+
+
+useEffect(() => {
+  dispatch(getCurrentUser())
+}, [dispatch])
 
   return (
+    !isRefreshing && (<Suspense fallback={<Slider />}>
     <Routes>
+     
     <Route path="/" element={<Navigation />}>
-      {/* <Route index element={<Home />} /> */}
-      <Route path='/register' element={<RegisterPage/>}/>
-      <Route path='/login' element={<LoginPage/>}/>
+    <Route index element={<HomePage />} />
+      
+      <Route path='/register'  element={<PublicRoute  restricted><RegisterPage/></PublicRoute>}/>
+      <Route path='/login'  element={<PublicRoute restricted><LoginPage/></PublicRoute>}/>
+      
+      <Route path='/contacts' element={<PrivateRoute><ContactsPage /></PrivateRoute>}/>
+      
+      
       
     </Route>
+    
   </Routes>
+  </Suspense>)
+    
+  
    
   );
 }

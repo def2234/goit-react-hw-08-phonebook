@@ -1,11 +1,16 @@
+import { Box, Button, TextField } from '@mui/material';
 import { register } from 'Redux/auth/authOperations';
+import { getError } from 'Redux/auth/authSelectors';
 import { useState } from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import Alert from '@mui/material/Alert';
+import AlertTitle from '@mui/material/AlertTitle';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const error = useSelector(getError);
 
   const handleChangeValue = e => {
     switch (e.target.name) {
@@ -43,40 +48,77 @@ const Register = () => {
 
   return (
     <>
-      <form onSubmit={handleSubmitForm}>
-        <label>
-          Name
-          <input
-            value={name}
-            onChange={handleChangeValue}
-            type="text"
-            name="name"
-            required
-          />
-        </label>
+      {error && (
+        <Alert
+          severity="error"
+          sx={{
+            marginTop: '20px',
+            width: '400px',
+            position: 'absolute',
+            right: '15px',
+            top: '100px',
+          }}
+        >
+          <AlertTitle>Error</AlertTitle>
+          Please double-check or enter unique data —{' '}
+          <strong>and try again!</strong>
+        </Alert>
+      )}
+      <Box
+        onSubmit={handleSubmitForm}
+        component="form"
+        sx={{
+          marginTop: '20px',
+        }}
+        noValidate
+        autoComplete="on"
+      >
+        <TextField
+          sx={{ display: 'block', marginBottom: '10px' }}
+          id="outlined-basic"
+          label="Name"
+          variant="outlined"
+          value={name}
+          onChange={handleChangeValue}
+          type="text"
+          name="name"
+          required
+        />
 
-        <label>
-          Email
-          <input
-            value={email}
-            onChange={handleChangeValue}
-            type="email"
-            name="email"
-            required
-          />
-        </label>
-        <label>
-          Password
-          <input
-            value={password}
-            onChange={handleChangeValue}
-            type="password"
-            name="password"
-            required
-          />
-        </label>
-        <button type="submit">Registration</button>
-      </form>
+        <TextField
+          sx={{ display: 'block', marginBottom: '10px' }}
+          id="outlined-basic"
+          label="Email"
+          variant="outlined"
+          value={email}
+          onChange={handleChangeValue}
+          type="email"
+          name="email"
+          required
+        />
+
+        <TextField
+          sx={{ display: 'block', marginBottom: '10px' }}
+          id="outlined-basic"
+          label="Password"
+          variant="outlined"
+          value={password}
+          onChange={handleChangeValue}
+          type="password"
+          name="password"
+          required
+        />
+
+        <Button
+          size="small"
+          sx={{ display: 'block' }}
+          variant="outlined"
+          type="submit"
+          disabled={name && email && password ? false : true}
+        >
+          Registration
+        </Button>
+      </Box>
     </>
   );
 };
