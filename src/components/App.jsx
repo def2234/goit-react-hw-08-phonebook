@@ -9,7 +9,7 @@ import HomePage from 'page/HomePage.js';
 import { useDispatch, useSelector} from 'react-redux';
 
 import { getCurrentUser } from 'Redux/auth/authOperations.js';
-import { getIsRefreshing, getToken } from 'Redux/auth/authSelectors.js';
+import { getIsRefreshing} from 'Redux/auth/authSelectors.js';
 
 
 
