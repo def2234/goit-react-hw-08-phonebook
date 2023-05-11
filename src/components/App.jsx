@@ -10,6 +10,7 @@ import { useDispatch, useSelector} from 'react-redux';
 
 import { getCurrentUser } from 'Redux/auth/authOperations.js';
 import { getIsRefreshing} from 'Redux/auth/authSelectors.js';
+// import { Toaster } from 'react-hot-toast';
 
 
 
@@ -43,12 +44,13 @@ useEffect(() => {
       <Route path='/login'  element={<PublicRoute restricted><LoginPage/></PublicRoute>}/>
       
       <Route path='/contacts' element={<PrivateRoute><ContactsPage /></PrivateRoute>}/>
-      
-      
+      <Route path='*' element={<HomePage/>} />
+     
       
     </Route>
-    
+   
   </Routes>
+  {/* <Toaster /> */}
   </Suspense>)
     
   

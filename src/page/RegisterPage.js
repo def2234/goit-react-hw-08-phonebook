@@ -1,16 +1,26 @@
 import { Box, Button, TextField } from '@mui/material';
 import { register } from 'Redux/auth/authOperations';
 import { getError } from 'Redux/auth/authSelectors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
+// import Alert from '@mui/material/Alert';
+// import AlertTitle from '@mui/material/AlertTitle';
+import { clearAuthError } from 'Redux/auth/authSlice';
 
 const Register = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const error = useSelector(getError);
+
+  const dispatch = useDispatch();
+
+  useEffect(() => {
+    if (error) {
+      return alert('Please double-check or enter unique data — try again!');
+    }
+    dispatch(clearAuthError());
+  }, [error, dispatch]);
 
   const handleChangeValue = e => {
     switch (e.target.name) {
@@ -31,39 +41,16 @@ const Register = () => {
     }
   };
 
-  const resetForm = () => {
-    setName('');
-    setEmail('');
-    setPassword('');
-  };
-
-  const dispatch = useDispatch();
-
   const handleSubmitForm = e => {
     e.preventDefault();
 
     dispatch(register({ name, email, password }));
-    resetForm();
   };
 
   return (
     <>
-      {error && (
-        <Alert
-          severity="error"
-          sx={{
-            marginTop: '20px',
-            width: '400px',
-            position: 'absolute',
-            right: '15px',
-            top: '100px',
-          }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          Please double-check or enter unique data —{' '}
-          <strong>and try again!</strong>
-        </Alert>
-      )}
+      {/* {error && alert()} */}
+
       <Box
         onSubmit={handleSubmitForm}
         component="form"
@@ -124,3 +111,18 @@ const Register = () => {
 };
 
 export default Register;
+
+/* <Alert
+          severity="error"
+          sx={{
+            marginTop: '20px',
+            width: '400px',
+            position: 'absolute',
+            right: '15px',
+            top: '100px',
+          }}
+        >
+          <AlertTitle>Error</AlertTitle>
+          Please double-check or enter unique data —{' '}
+          <strong>and try again!</strong>
+        </Alert> */
