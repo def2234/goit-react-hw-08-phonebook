@@ -1,16 +1,25 @@
 import { Box, Button, TextField } from '@mui/material';
 import { logIn } from 'Redux/auth/authOperations';
 import { getError } from 'Redux/auth/authSelectors';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import Alert from '@mui/material/Alert';
-import AlertTitle from '@mui/material/AlertTitle';
+
+import { clearAuthError } from 'Redux/auth/authSlice';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const dispatch = useDispatch();
   const error = useSelector(getError);
+
+  useEffect(() => {
+    if (error) {
+      alert(
+        'Wrong email or password, please check your email or password — and try again!'
+      );
+      dispatch(clearAuthError());
+    }
+  }, [error, dispatch]);
 
   const handleChangeValue = e => {
     switch (e.target.name) {
@@ -27,35 +36,13 @@ const Login = () => {
     }
   };
 
-  const resetForm = () => {
-    setEmail('');
-    setPassword('');
-  };
-
   const handleSubmitForm = e => {
     e.preventDefault();
     dispatch(logIn({ email, password }));
-    resetForm();
   };
 
   return (
     <>
-      {error && (
-        <Alert
-          severity="error"
-          sx={{
-            marginTop: '20px',
-            width: '400px',
-            position: 'absolute',
-            right: '15px',
-            top: '100px',
-          }}
-        >
-          <AlertTitle>Error</AlertTitle>
-          Wrong email or password, please check your email and password —{' '}
-          <strong>and try again!</strong>
-        </Alert>
-      )}
       <Box
         component="form"
         sx={{

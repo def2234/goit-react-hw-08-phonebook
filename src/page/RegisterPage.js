@@ -3,8 +3,7 @@ import { register } from 'Redux/auth/authOperations';
 import { getError } from 'Redux/auth/authSelectors';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-// import Alert from '@mui/material/Alert';
-// import AlertTitle from '@mui/material/AlertTitle';
+
 import { clearAuthError } from 'Redux/auth/authSlice';
 
 const Register = () => {
@@ -17,9 +16,9 @@ const Register = () => {
 
   useEffect(() => {
     if (error) {
-      return alert('Please double-check or enter unique data — try again!');
+      alert('Please double-check or enter unique data — try again!');
+      dispatch(clearAuthError());
     }
-    dispatch(clearAuthError());
   }, [error, dispatch]);
 
   const handleChangeValue = e => {
@@ -49,8 +48,6 @@ const Register = () => {
 
   return (
     <>
-      {/* {error && alert()} */}
-
       <Box
         onSubmit={handleSubmitForm}
         component="form"
